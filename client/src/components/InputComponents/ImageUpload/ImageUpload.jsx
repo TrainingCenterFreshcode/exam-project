@@ -6,11 +6,16 @@ const ImageUpload = props => {
   const [{ value, ...restField }, meta, helpers] = useField(props.name);
   const { uploadContainer, inputContainer, imgStyle } = props.classes;
   const onChange = e => {
-    console.log(e.target.files[0]);
     const node = window.document.getElementById('imagePreview');
-    const file = e.target.files[0];
+    let file;
+    if(!e.target.files[0]) {
+      file = [];
+    } else {
+      file = e.target.files[0];
+    }
+    
     const imageType = /image.*/;
-    if (!file.type.match(imageType)) {
+    if (!file.type?.match(imageType)) {
       e.target.value = '';
     } else {
       helpers.setValue(file, false);
